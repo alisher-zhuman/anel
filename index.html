@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fff6f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1b1315" media="(prefers-color-scheme: dark)">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no">
+  <title>Вам письмо 📩</title>
+  <meta property="og:title" content="Вам письмо 📩">
+  <meta property="og:description" content="Только для одного человека 🔒">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+</head>
+<body>
+  <main class="app">
+
+    <!-- ============ 1. Идентификация ============ -->
+    <section class="screen is-active" id="screen-gate" aria-labelledby="gate-title">
+      <div class="card gate">
+        <header class="gov">
+          <div class="gov__emblem" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.8l7.5 3.1v5.4c0 4.7-3.1 8.6-7.5 10.3-4.4-1.7-7.5-5.6-7.5-10.3V5.9L12 2.8z"/>
+              <path d="M12 15.6s-3.4-2-3.4-4.3c0-1.2.9-2 1.9-2 .7 0 1.2.4 1.5.9.3-.5.8-.9 1.5-.9 1 0 1.9.8 1.9 2 0 2.3-3.4 4.3-3.4 4.3z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="gov__text">
+            <p class="gov__org" data-text="gate.org"></p>
+            <p class="gov__sys" data-text="gate.system"></p>
+          </div>
+        </header>
+
+        <span class="badge" data-text="gate.badge"></span>
+        <h1 id="gate-title" class="title" tabindex="-1" data-text="gate.title"></h1>
+        <p class="muted" data-text="gate.subtitle"></p>
+
+        <!-- Вопросы -->
+        <div class="gate__quiz" id="gate-quiz">
+          <div class="steps">
+            <span class="steps__label" id="step-label"></span>
+            <ol class="steps__dots" id="step-dots" aria-hidden="true"></ol>
+          </div>
+          <form id="gate-form" class="gate__form" novalidate autocomplete="off">
+            <label for="gate-input" class="question" id="gate-question"></label>
+            <input id="gate-input" class="input" type="text" autocomplete="off" autocapitalize="off"
+                   autocorrect="off" spellcheck="false" enterkeyhint="done" maxlength="80"
+                   data-placeholder="gate.placeholder">
+            <p class="feedback" id="gate-feedback" role="status" aria-live="polite"></p>
+            <p class="hint" id="gate-hint" hidden></p>
+            <button class="btn btn--primary" type="submit" data-text="gate.check"></button>
+          </form>
+        </div>
+
+        <!-- Псевдо-сканирование -->
+        <div class="scan" id="gate-scan" hidden>
+          <div class="scan__face" aria-hidden="true">
+            <span>👩</span>
+            <i class="scan__line"></i>
+          </div>
+          <p class="scan__label" id="scan-label" role="status" aria-live="polite"></p>
+          <div class="progress" aria-hidden="true"><div class="progress__bar" id="scan-bar"></div></div>
+          <p class="scan__pct" id="scan-pct">0%</p>
+        </div>
+
+        <!-- Успех -->
+        <div class="verified" id="gate-verified" hidden>
+          <div class="verified__icon" aria-hidden="true">✅</div>
+          <h2 class="subtitle" data-text="gate.success"></h2>
+          <p class="muted" data-text="gate.successSub"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. Видео ============ -->
+    <section class="screen" id="screen-video" hidden aria-labelledby="video-title">
+      <div class="intro">
+        <div class="envelope" aria-hidden="true">📩</div>
+        <h1 id="video-title" class="title" tabindex="-1" data-text="video.title"></h1>
+        <p class="muted" data-text="video.subtitle"></p>
+      </div>
+
+      <div class="video">
+        <video id="video" playsinline webkit-playsinline preload="metadata" poster="assets/poster.jpg"
+               controls controlslist="nodownload noplaybackrate" disablepictureinpicture>
+          <source src="assets/video.mp4" type="video/mp4">
+        </video>
+        <button class="video__overlay" id="video-play" type="button">
+          <span class="video__play" data-text="video.play"></span>
+        </button>
+      </div>
+
+      <button class="btn btn--primary btn--next" id="video-next" type="button" hidden data-text="video.next"></button>
+    </section>
+
+    <!-- ============ 3. Договор ============ -->
+    <section class="screen" id="screen-contract" hidden aria-labelledby="doc-title">
+      <article class="doc">
+        <header class="doc__head">
+          <div class="doc__emblem" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+              <path d="M12 2.8l7.5 3.1v5.4c0 4.7-3.1 8.6-7.5 10.3-4.4-1.7-7.5-5.6-7.5-10.3V5.9L12 2.8z"/>
+              <path d="M12 15.6s-3.4-2-3.4-4.3c0-1.2.9-2 1.9-2 .7 0 1.2.4 1.5.9.3-.5.8-.9 1.5-.9 1 0 1.9.8 1.9 2 0 2.3-3.4 4.3-3.4 4.3z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <p class="doc__org" data-text="contract.org"></p>
+        </header>
+
+        <h1 id="doc-title" class="doc__title" tabindex="-1" data-text="contract.title"></h1>
+        <p class="doc__subject" data-text="contract.subject"></p>
+        <div class="doc__meta">
+          <span data-text="contract.city"></span>
+          <span id="doc-date"></span>
+        </div>
+
+        <p class="doc__body">
+          <span data-text="contract.bodyBefore"></span>
+          <input class="doc__name" id="doc-name" type="text" maxlength="40" autocomplete="off"
+                 autocapitalize="words" enterkeyhint="done" data-placeholder="contract.namePlaceholder"
+                 data-aria-label="contract.namePlaceholder">
+          <span data-text="contract.bodyAfter"></span>
+        </p>
+
+        <ol class="doc__terms" id="doc-terms"></ol>
+
+        <div class="sign">
+          <div class="sign__top">
+            <span class="sign__label" data-text="contract.signLabel"></span>
+            <button type="button" class="link-btn" id="sign-clear" data-text="contract.clear"></button>
+          </div>
+          <div class="sign__pad">
+            <canvas id="sign-canvas" role="img" data-aria-label="contract.signHint"></canvas>
+            <span class="sign__placeholder" id="sign-placeholder" data-text="contract.signHint"></span>
+          </div>
+        </div>
+
+        <!-- Печать -->
+        <svg class="seal" id="seal" viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <path id="seal-path" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/>
+          </defs>
+          <circle cx="60" cy="60" r="57" fill="none" stroke="currentColor" stroke-width="3"/>
+          <circle cx="60" cy="60" r="53" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text font-size="9.5" font-weight="700" fill="currentColor" font-family="Nunito, sans-serif">
+            <textPath href="#seal-path" textLength="280" lengthAdjust="spacing" data-text="contract.sealText"></textPath>
+          </text>
+          <path d="M60 79c-9-6-16-12-16-19.5 0-5 3.6-8.5 8-8.5 3.4 0 6.2 2 8 5 1.8-3 4.6-5 8-5 4.4 0 8 3.5 8 8.5C76 67 69 73 60 79z" fill="currentColor"/>
+        </svg>
+      </article>
+
+      <div class="actions">
+        <button class="btn btn--primary" id="btn-sign" type="button" disabled aria-describedby="sign-note" data-text="contract.sign"></button>
+      </div>
+      <p class="footnote" id="sign-note" data-text="contract.signNote"></p>
+    </section>
+
+    <!-- ============ 4. Финал ============ -->
+    <section class="screen" id="screen-signed" hidden aria-labelledby="signed-title">
+      <!-- Шаг 1: разблокировка -->
+      <div class="card center">
+        <div class="big-emoji" aria-hidden="true">🎉</div>
+        <h1 id="signed-title" class="title" tabindex="-1" data-text="signed.title"></h1>
+        <p data-text="signed.text"></p>
+        <a class="btn btn--primary" id="ig-link" href="#" target="_blank" rel="noopener" data-text="signed.openProfile"></a>
+        <p class="footnote" data-text="signed.unblockHint"></p>
+        <button class="btn btn--ghost" id="btn-unblocked" type="button" data-text="signed.unblocked"></button>
+      </div>
+
+      <!-- Шаг 2: Макаронная -->
+      <div class="card center answer" id="macaron" tabindex="-1" hidden>
+        <div class="big-emoji" aria-hidden="true">🍪</div>
+        <h2 class="title" data-text="macaron.title"></h2>
+        <p class="muted" data-text="macaron.text"></p>
+        <div class="choices" role="group" data-aria-label="macaron.title">
+          <button type="button" class="choice" data-choice="now" aria-pressed="false" data-text="macaron.now"></button>
+          <button type="button" class="choice" data-choice="later" aria-pressed="false" data-text="macaron.later"></button>
+        </div>
+        <div class="reply" id="reply" role="status" aria-live="polite" hidden>
+          <p class="reply__text" id="reply-text"></p>
+          <a class="btn btn--primary" id="dm-link" href="#" target="_blank" rel="noopener" data-text="macaron.dm"></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
